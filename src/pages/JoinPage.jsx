@@ -10,11 +10,23 @@ function JoinPage() {
         </JoinHeader>
         <JoinMain>
           <EmailLabel htmlFor="joinEmail"></EmailLabel>
-          <EmailInput type="email" id="joinEmail"></EmailInput>
+          <EmailInput
+            type="email"
+            id="joinEmail"
+            placeholder="아이디"
+          ></EmailInput>
           <PasswordLabel htmlFor="joinPassword"></PasswordLabel>
-          <PasswordInput type="password" id="joinPassword"></PasswordInput>
+          <PasswordInput
+            type="password"
+            id="joinPassword"
+            placeholder="비밀번호"
+          ></PasswordInput>
           <NicknameLabel htmlFor="joinNickname"></NicknameLabel>
-          <NicknameInput type="text" id="joinNickname"></NicknameInput>
+          <NicknameInput
+            type="text"
+            id="joinNickname"
+            placeholder="닉네임(10글자 내외)"
+          ></NicknameInput>
           <JoinButton type="submit">가입하기</JoinButton>
         </JoinMain>
       </JoinForm>
@@ -35,7 +47,14 @@ const JoinWrapper = styled.div`
 
 const JoinHeader = styled.header``;
 
-const JoinMain = styled.main``;
+const JoinMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light-pink);
+  border-radius: 15px;
+`;
 
 const JoinForm = styled.form`
   display: flex;
