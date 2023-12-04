@@ -1,23 +1,76 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { authServerAPI } from "redux/modules/api";
 import styled from "styled-components";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "email") {
+      setEmail(value);
+    }
+    if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  const onClickLoginHandler = async () => {
+    try {
+      const response = await authServerAPI.post("/login", {
+        id: email,
+        password: password,
+      });
+
+      let userInfo;
+
+      if (null != response.data && true === response.data.success) {
+        userInfo = response.data;
+        // dispatch();
+        localStorage.setItem("userInfo", JSON.Stringfy(userInfo));
+      }
+
+      alert("로그인 성공!");
+      navigate("/home");
+
+      // form.submit();
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <STWrapper>
       <STHeader></STHeader>
       <STMain>
-        <STLoginForm>
+        <STLoginForm name="form" onSubmit={onClickLoginHandler}>
           <LoginTitle>로그인</LoginTitle>
           <STEmailLabel htmlfor="id"></STEmailLabel>
-          <STEmailInput type="text" placeholder="아이디"></STEmailInput>
+          <STEmailInput
+            type="email"
+            placeholder="아이디"
+            name="email"
+            value={email}
+            onChange={onChange}
+          ></STEmailInput>
           <STPasswordLabel htmlfor="password"></STPasswordLabel>
           <STPasswordInput
             type="password"
             placeholder="비밀번호"
+            name="password"
+            value={password}
+            onChange={onChange}
           ></STPasswordInput>
           <button type="submit">로그인</button>
-          <Link to="join">회원가입</Link>
+          <Link to="/join">회원가입</Link>
         </STLoginForm>
       </STMain>
     </STWrapper>
